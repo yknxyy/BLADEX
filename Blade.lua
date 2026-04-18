@@ -1,3 +1,6 @@
+-- Blade X Black Box Edition - GitHub Hosted
+-- Repo: https://github.com/yknxyy/BLADEX
+
 print("🔥 Blade X Black Box loaded from GitHub!")
 
 local ScreenGui = Instance.new("ScreenGui")
