@@ -203,4 +203,4 @@ game:GetService("UserInputService").InputChanged:Connect(function(input)
     end
 end)
 
-print("Blade X Black Box GUI is ready! Switch to Rivals Hacks tab for your features.")
+print("Blade X Black Box GUI is ready! Switch to Rivals Hacks tab for aimbot, silent aim, rage hack & skin changer.")
