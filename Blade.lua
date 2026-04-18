@@ -1,5 +1,5 @@
 -- Blade X Black Box Edition - Revised & Improved
--- Repo: https://github.com/yknxyy/BLADEX
+-- Dragging fixed: now stops properly when mouse is released
 
 print("🔥 Blade X Black Box loaded successfully!")
 
@@ -145,7 +145,6 @@ for i, tabName in ipairs(Tabs) do
         end
         TabFrame.Visible = true
         
-        -- Visual feedback
         for _, btn in pairs(TabButtons) do
             btn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
             btn.TextColor3 = Color3.fromRGB(200, 200, 200)
@@ -278,27 +277,29 @@ CreateToggle(HacksTab, "Aimbot + Silent Aim (Z3US)", 20, function(state)
     if state then
         pcall(function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/refs/heads/main/main.lua"))()
-            print("Z3US Aimbot + Silent Aim loaded")
+            print("✅ Z3US Loader opened → Select Rivals and click Load")
         end)
     end
 end)
 
 CreateToggle(HacksTab, "Rage Hack", 80, function(state)
     print("Rage Hack " .. (state and "Enabled" or "Disabled"))
-    -- Add your rage hack logic here
 end)
 
-CreateToggle(HacksTab, "Skin Changer (Xeno)", 140, function(state)
+CreateToggle(HacksTab, "Skin Changer (Xeno compatible)", 140, function(state)
     if state then
         pcall(function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/endoverdosing/Soluna-API/refs/heads/main/skin-changer.lua", true))()
+            print("✅ Skin Changer loaded")
         end)
     end
 end)
 
--- ==================== DRAG FUNCTIONALITY ====================
+-- ==================== FIXED DRAGGING ====================
 local dragging = false
-local dragInput, dragStart, startPos
+local dragInput = nil
+local dragStart = nil
+local startPos = nil
 
 TopBar.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -314,13 +315,28 @@ TopBar.InputChanged:Connect(function(input)
     end
 end)
 
-game:GetService("UserInputService").InputChanged:Connect(function(input)
+local UserInputService = game:GetService("UserInputService")
+
+UserInputService.InputChanged:Connect(function(input)
     if dragging and input == dragInput then
         local delta = input.Position - dragStart
-        Main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
-                                  startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        Main.Position = UDim2.new(
+            startPos.X.Scale,
+            startPos.X.Offset + delta.X,
+            startPos.Y.Scale,
+            startPos.Y.Offset + delta.Y
+        )
+    end
+end)
+
+-- This is the key fix: properly stop dragging when mouse is released
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+        dragInput = nil
     end
 end)
 
 print("✅ Blade X Black Box Edition is ready!")
+print("Drag the top bar — it should now stop cleanly when you release the mouse.")
 print("Switch to the 'Rivals Hacks' tab for cheats.")
