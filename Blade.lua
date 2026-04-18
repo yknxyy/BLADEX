@@ -1,15 +1,14 @@
--- Blade X Black Box Edition - Revised & Improved
--- Dragging fixed: now stops properly when mouse is released
+-- Blade X Black Box - Kicia Edition (Rivals Focused)
+-- Loads KiciaHook V2 - Features: Aimbot, Silent Aim, Rage, ESP, Anti-Katana, etc.
 
-print("🔥 Blade X Black Box loaded successfully!")
+print("🔥 Blade X Kicia Edition loaded for Rivals!")
 
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "BladeX"
+ScreenGui.Name = "BladeX_Kicia"
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ResetOnSpawn = false
 
 local Main = Instance.new("Frame")
-Main.Name = "Main"
 Main.Size = UDim2.new(0, 920, 0, 620)
 Main.Position = UDim2.new(0.5, -460, 0.5, -310)
 Main.BackgroundColor3 = Color3.fromRGB(28, 28, 28)
@@ -27,7 +26,6 @@ UIStroke.Parent = Main
 
 -- Top Bar
 local TopBar = Instance.new("Frame")
-TopBar.Name = "TopBar"
 TopBar.Size = UDim2.new(1, 0, 0, 55)
 TopBar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
 TopBar.BorderSizePixel = 0
@@ -37,7 +35,7 @@ local TopCorner = Instance.new("UICorner")
 TopCorner.CornerRadius = UDim.new(0, 12)
 TopCorner.Parent = TopBar
 
--- Black Box Icon
+-- Icon
 local IconFrame = Instance.new("Frame")
 IconFrame.Size = UDim2.new(0, 46, 0, 46)
 IconFrame.Position = UDim2.new(0, 14, 0, 5)
@@ -59,10 +57,10 @@ IconLabel.Parent = IconFrame
 
 -- Title
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(0, 220, 1, 0)
+Title.Size = UDim2.new(0, 340, 1, 0)
 Title.Position = UDim2.new(0, 72, 0, 0)
 Title.BackgroundTransparency = 1
-Title.Text = "BLADE X"
+Title.Text = "BLADE X - KICIA EDITION"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.TextScaled = true
 Title.Font = Enum.Font.GothamBlack
@@ -70,11 +68,11 @@ Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.Parent = TopBar
 
 local Version = Instance.new("TextLabel")
-Version.Size = UDim2.new(0, 100, 1, 0)
-Version.Position = UDim2.new(0, 280, 0, 0)
+Version.Size = UDim2.new(0, 150, 1, 0)
+Version.Position = UDim2.new(0, 410, 0, 0)
 Version.BackgroundTransparency = 1
-Version.Text = "Black Box Edition"
-Version.TextColor3 = Color3.fromRGB(180, 180, 180)
+Version.Text = "Rivals • KiciaHook V2"
+Version.TextColor3 = Color3.fromRGB(0, 200, 100)
 Version.TextScaled = true
 Version.Font = Enum.Font.Gotham
 Version.TextXAlignment = Enum.TextXAlignment.Left
@@ -99,8 +97,8 @@ CloseBtn.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
 end)
 
--- Tab System
-local Tabs = {"Execute", "Script Hub", "Rivals Hacks", "Settings"}
+-- Tabs
+local Tabs = {"Execute", "Rivals Hacks"}
 local TabButtons = {}
 local TabFrames = {}
 
@@ -112,8 +110,8 @@ TabContainer.Parent = Main
 
 for i, tabName in ipairs(Tabs) do
     local TabBtn = Instance.new("TextButton")
-    TabBtn.Size = UDim2.new(0, 130, 0, 40)
-    TabBtn.Position = UDim2.new(0, 20 + (i-1)*140, 0, 5)
+    TabBtn.Size = UDim2.new(0, 140, 0, 40)
+    TabBtn.Position = UDim2.new(0, 20 + (i-1)*150, 0, 5)
     TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
     TabBtn.Text = tabName
     TabBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
@@ -140,11 +138,8 @@ for i, tabName in ipairs(Tabs) do
     TabFrames[tabName] = TabFrame
     
     TabBtn.MouseButton1Click:Connect(function()
-        for _, frame in pairs(TabFrames) do
-            frame.Visible = false
-        end
+        for _, f in pairs(TabFrames) do f.Visible = false end
         TabFrame.Visible = true
-        
         for _, btn in pairs(TabButtons) do
             btn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
             btn.TextColor3 = Color3.fromRGB(200, 200, 200)
@@ -154,14 +149,14 @@ for i, tabName in ipairs(Tabs) do
     end)
 end
 
--- ==================== EXECUTE TAB ====================
+-- Execute Tab (for running any extra Lua)
 local ExecuteTab = TabFrames["Execute"]
 
 local Editor = Instance.new("TextBox")
 Editor.Size = UDim2.new(0.58, -15, 1, -70)
 Editor.Position = UDim2.new(0, 10, 0, 10)
 Editor.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-Editor.Text = "-- Welcome to Blade X Executor\n-- Paste your Lua script here..."
+Editor.Text = "-- Paste extra Lua here if needed"
 Editor.TextColor3 = Color3.fromRGB(220, 220, 220)
 Editor.TextXAlignment = Enum.TextXAlignment.Left
 Editor.TextYAlignment = Enum.TextYAlignment.Top
@@ -179,7 +174,7 @@ local Console = Instance.new("TextLabel")
 Console.Size = UDim2.new(0.42, -15, 1, -70)
 Console.Position = UDim2.new(0.58, 10, 0, 10)
 Console.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
-Console.Text = ">> Blade X Console\nReady.\n"
+Console.Text = ">> Blade X Console\nKiciaHook Ready...\n"
 Console.TextColor3 = Color3.fromRGB(100, 255, 100)
 Console.TextXAlignment = Enum.TextXAlignment.Left
 Console.TextYAlignment = Enum.TextYAlignment.Top
@@ -192,7 +187,6 @@ local ConsoleCorner = Instance.new("UICorner")
 ConsoleCorner.CornerRadius = UDim.new(0, 8)
 ConsoleCorner.Parent = Console
 
--- Execute Button
 local ExecBtn = Instance.new("TextButton")
 ExecBtn.Size = UDim2.new(0.3, 0, 0, 45)
 ExecBtn.Position = UDim2.new(0.35, 0, 1, -55)
@@ -209,15 +203,8 @@ ExecCorner.Parent = ExecBtn
 
 ExecBtn.MouseButton1Click:Connect(function()
     local code = Editor.Text
-    if code:match("^%s*$") then
-        Console.Text = Console.Text .. "\n[ERROR] No code to execute."
-        return
-    end
-    
-    local success, err = pcall(function()
-        loadstring(code)()
-    end)
-    
+    if code:match("^%s*$") then return end
+    local success, err = pcall(loadstring(code))
     if success then
         Console.Text = Console.Text .. "\n[✓] Executed successfully."
     else
@@ -225,7 +212,7 @@ ExecBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- ==================== RIVALS HACKS TAB ====================
+-- ==================== KICIA RIVALS HACKS TAB ====================
 local HacksTab = TabFrames["Rivals Hacks"]
 
 local function CreateToggle(parent, name, yOffset, callback)
@@ -255,10 +242,8 @@ local function CreateToggle(parent, name, yOffset, callback)
     Status.Parent = Toggle
     
     local enabled = false
-    
     Toggle.MouseButton1Click:Connect(function()
         enabled = not enabled
-        
         if enabled then
             Toggle.BackgroundColor3 = Color3.fromRGB(0, 170, 80)
             Status.Text = "ON 🔥"
@@ -268,38 +253,40 @@ local function CreateToggle(parent, name, yOffset, callback)
             Status.Text = "OFF"
             Status.TextColor3 = Color3.fromRGB(255, 80, 80)
         end
-        
         if callback then callback(enabled) end
     end)
 end
 
-CreateToggle(HacksTab, "Aimbot + Silent Aim (Z3US)", 20, function(state)
+-- Main KiciaHook Loader
+CreateToggle(HacksTab, "Load KiciaHook V2 (Full)", 20, function(state)
     if state then
         pcall(function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/refs/heads/main/main.lua"))()
-            print("✅ Z3US Loader opened → Select Rivals and click Load")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/kiciahook/kiciahook/refs/heads/main/loader.luau"))()
+            print("✅ KiciaHook V2 Loader started - Follow any on-screen instructions")
         end)
     end
 end)
 
-CreateToggle(HacksTab, "Rage Hack", 80, function(state)
-    print("Rage Hack " .. (state and "Enabled" or "Disabled"))
+-- Common feature toggles (most users enable these inside the Kicia menu after loading)
+CreateToggle(HacksTab, "Silent Aim + Aimbot", 80, function(state)
+    print("Silent Aim / Aimbot → Enable inside KiciaHook menu after loading")
 end)
 
-CreateToggle(HacksTab, "Skin Changer (Xeno compatible)", 140, function(state)
-    if state then
-        pcall(function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/endoverdosing/Soluna-API/refs/heads/main/skin-changer.lua", true))()
-            print("✅ Skin Changer loaded")
-        end)
-    end
+CreateToggle(HacksTab, "Ragebot + Wallbang", 140, function(state)
+    print("Ragebot → Best with KiciaHook loaded (high detection risk)")
+end)
+
+CreateToggle(HacksTab, "ESP + Magic Bullet", 200, function(state)
+    print("ESP features → Toggle in KiciaHook GUI")
+end)
+
+CreateToggle(HacksTab, "Anti-Katana / No Spread / Recoil", 260, function(state)
+    print("Anti-Katana & weapon mods → Available after loading KiciaHook")
 end)
 
 -- ==================== FIXED DRAGGING ====================
 local dragging = false
-local dragInput = nil
-local dragStart = nil
-local startPos = nil
+local dragInput, dragStart, startPos
 
 TopBar.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -320,16 +307,10 @@ local UserInputService = game:GetService("UserInputService")
 UserInputService.InputChanged:Connect(function(input)
     if dragging and input == dragInput then
         local delta = input.Position - dragStart
-        Main.Position = UDim2.new(
-            startPos.X.Scale,
-            startPos.X.Offset + delta.X,
-            startPos.Y.Scale,
-            startPos.Y.Offset + delta.Y
-        )
+        Main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 end)
 
--- This is the key fix: properly stop dragging when mouse is released
 UserInputService.InputEnded:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
         dragging = false
@@ -337,6 +318,5 @@ UserInputService.InputEnded:Connect(function(input)
     end
 end)
 
-print("✅ Blade X Black Box Edition is ready!")
-print("Drag the top bar — it should now stop cleanly when you release the mouse.")
-print("Switch to the 'Rivals Hacks' tab for cheats.")
+print("✅ Blade X Kicia Edition is ready!")
+print("Go to Rivals Hacks tab → Toggle 'Load KiciaHook V2' first.")
