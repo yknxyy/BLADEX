@@ -1,5 +1,5 @@
 -- Blade X Black Box Edition - GitHub Hosted
--- Repository: https://github.com/yknxyy/BLADE-X
+-- Repo: https://github.com/yknxyy/BLADEX
 
 print("🔥 Blade X Black Box loaded from GitHub!")
 
@@ -71,7 +71,136 @@ CloseBtn.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
 end)
 
--- (The rest of the tabs, Execute, Rivals Hacks with aimbot/silent/rage/skinchanger, and draggable code are the same as before. 
--- If you need the full script again, just say "give me full script" and I'll send the complete version.)
+-- Tab Buttons
+local Tabs = {"Execute", "Script Hub", "Rivals Hacks", "Settings"}
+local TabFrames = {}
 
--- Draggable (add the dragging code from previous messages if it's missing)
+for i, tabName in ipairs(Tabs) do
+    local TabBtn = Instance.new("TextButton")
+    TabBtn.Size = UDim2.new(0, 120, 0, 40)
+    TabBtn.Position = UDim2.new(0, 280 + (i-1)*130, 0, 5)
+    TabBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    TabBtn.Text = tabName
+    TabBtn.TextColor3 = Color3.new(1,1,1)
+    TabBtn.Parent = TopBar
+    
+    local TabFrame = Instance.new("Frame")
+    TabFrame.Size = UDim2.new(1, 0, 1, -50)
+    TabFrame.Position = UDim2.new(0, 0, 0, 50)
+    TabFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    TabFrame.Visible = (i == 1)
+    TabFrame.Parent = Main
+    TabFrames[tabName] = TabFrame
+    
+    TabBtn.MouseButton1Click:Connect(function()
+        for _, f in pairs(TabFrames) do f.Visible = false end
+        TabFrame.Visible = true
+    end)
+end
+
+-- Execute Tab
+local ExecuteTab = TabFrames["Execute"]
+
+local Console = Instance.new("TextLabel")
+Console.Size = UDim2.new(0.45, -10, 1, -10)
+Console.Position = UDim2.new(0, 10, 0, 10)
+Console.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+Console.Text = "OUTPUT CONSOLE\nReady for scripts..."
+Console.TextXAlignment = Enum.TextXAlignment.Left
+Console.TextYAlignment = Enum.TextYAlignment.Top
+Console.TextColor3 = Color3.new(0.8, 0.8, 0.8)
+Console.TextWrapped = true
+Console.Parent = ExecuteTab
+
+local Editor = Instance.new("TextBox")
+Editor.Size = UDim2.new(0.55, -10, 1, -60)
+Editor.Position = UDim2.new(0.45, 10, 0, 10)
+Editor.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Editor.Text = "-- Paste your Lua here\nprint('Blade X Loaded')"
+Editor.TextXAlignment = Enum.TextXAlignment.Left
+Editor.TextYAlignment = Enum.TextYAlignment.Top
+Editor.TextColor3 = Color3.new(1,1,1)
+Editor.ClearTextOnFocus = false
+Editor.MultiLine = true
+Editor.Parent = ExecuteTab
+
+local ExecBtn = Instance.new("TextButton")
+ExecBtn.Size = UDim2.new(0.2, 0, 0, 40)
+ExecBtn.Position = UDim2.new(0.45, 10, 1, -50)
+ExecBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+ExecBtn.Text = "Execute"
+ExecBtn.TextColor3 = Color3.new(1,1,1)
+ExecBtn.Parent = ExecuteTab
+ExecBtn.MouseButton1Click:Connect(function()
+    local success, err = pcall(loadstring(Editor.Text))
+    if not success then
+        Console.Text = Console.Text .. "\nERROR: " .. tostring(err)
+    else
+        Console.Text = Console.Text .. "\nExecuted successfully."
+    end
+end)
+
+-- Rivals Hacks Tab
+local HacksTab = TabFrames["Rivals Hacks"]
+
+local function AddToggle(parent, text, yPos, callback)
+    local Toggle = Instance.new("TextButton")
+    Toggle.Size = UDim2.new(0.8, 0, 0, 40)
+    Toggle.Position = UDim2.new(0.1, 0, 0, yPos)
+    Toggle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    Toggle.Text = text .. " : OFF"
+    Toggle.TextColor3 = Color3.new(1,1,1)
+    Toggle.Parent = parent
+    
+    local enabled = false
+    Toggle.MouseButton1Click:Connect(function()
+        enabled = not enabled
+        Toggle.Text = text .. " : " .. (enabled and "ON 🔥" or "OFF")
+        Toggle.BackgroundColor3 = enabled and Color3.fromRGB(0, 170, 0) or Color3.fromRGB(40, 40, 40)
+        if callback then callback(enabled) end
+    end)
+end
+
+AddToggle(HacksTab, "Aimbot + Silent Aim", 20, function(state)
+    if state then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/refs/heads/main/main.lua"))()
+        print("Z3US loaded → Aimbot, Silent Aim, Rage")
+    end
+end)
+
+AddToggle(HacksTab, "Rage Hack", 70, function(state)
+    print("Rage Hack toggled")
+end)
+
+AddToggle(HacksTab, "Skin Changer (Xeno compatible)", 120, function(state)
+    if state then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/endoverdosing/Soluna-API/refs/heads/main/skin-changer.lua", true))()
+        print("Skin Changer loaded")
+    end
+end)
+
+-- Make GUI Draggable
+local dragging, dragInput, dragStart, startPos
+
+TopBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = Main.Position
+    end
+end)
+
+TopBar.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if dragging and input == dragInput then
+        local delta = input.Position - dragStart
+        Main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+print("Blade X Black Box GUI is ready! Switch to Rivals Hacks tab for your features.")
