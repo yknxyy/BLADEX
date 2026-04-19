@@ -1,6 +1,4 @@
--- Blade Executor - Full Custom Script Executor GUI (v1.1 Fixed & Ready)
--- The glowing eye at the top now reliably opens the GUI
-
+-- Blade Executor - Full Custom Script Executor GUI (v1.2 Fixed & Ready)
 print("welcome to Blade Executor")
 
 local TweenService = game:GetService("TweenService")
@@ -33,6 +31,7 @@ stroke.Color = Color3.fromRGB(255, 40, 40)
 stroke.Thickness = 4
 stroke.Transparency = 0.3
 
+-- Hover effect
 eye.MouseEnter:Connect(function()
     TweenService:Create(stroke, fastTi, {Thickness = 7, Transparency = 0}):Play()
 end)
@@ -76,7 +75,7 @@ local version = Instance.new("TextLabel")
 version.Size = UDim2.new(0, 120, 1, 0)
 version.Position = UDim2.new(1, -150, 0, 0)
 version.BackgroundTransparency = 1
-version.Text = "v1.1 • Fixed"
+version.Text = "v1.2 • Fixed"
 version.TextColor3 = Color3.fromRGB(120, 120, 120)
 version.TextXAlignment = Enum.TextXAlignment.Right
 version.Font = Enum.Font.Gotham
@@ -105,8 +104,8 @@ titleBar.InputBegan:Connect(function(input)
 end)
 
 titleBar.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then 
-        dragInput = input 
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
     end
 end)
 
@@ -117,93 +116,36 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
+-- Close Button
+closeBtn.MouseButton1Click:Connect(function()
+    main.Visible = false
+end)
+
+-- ==================== EYE CLICK TO TOGGLE GUI ====================
+local guiOpen = false
+
+eye.MouseButton1Click:Connect(function()
+    guiOpen = not guiOpen
+    
+    if guiOpen then
+        main.Visible = true
+        main.BackgroundTransparency = 1
+        mainStroke.Transparency = 1
+        
+        -- Fade in animation
+        TweenService:Create(main, ti, {BackgroundTransparency = 0}):Play()
+        TweenService:Create(mainStroke, ti, {Transparency = 0}):Play()
+    else
+        -- Fade out then hide
+        TweenService:Create(main, ti, {BackgroundTransparency = 1}):Play()
+        TweenService:Create(mainStroke, ti, {Transparency = 1}):Play()
+        
+        task.wait(0.4)
+        main.Visible = false
+    end
+end)
+
 -- Content Container
 local content = Instance.new("Frame")
 content.Size = UDim2.new(1, -20, 1, -75)
-content.Position = UDim2.new(0, 10, 0, 65)
-content.BackgroundTransparency = 1
-content.Parent = main
-
--- Sidebar
-local sidebar = Instance.new("Frame")
-sidebar.Size = UDim2.new(0, 180, 1, 0)
-sidebar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
-sidebar.Parent = content
-Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 12)
-
-local tabList = Instance.new("UIListLayout", sidebar)
-tabList.Padding = UDim.new(0, 6)
-tabList.SortOrder = Enum.SortOrder.LayoutOrder
-Instance.new("UIPadding", sidebar).PaddingAll = UDim.new(0, 8)
-
-local tabs = {}
-local currentTab = nil
-
-local function createSidebarButton(name, icon)
-    local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(1, 0, 0, 55)
-    btn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    btn.Text = "  " .. icon .. "  " .. name
-    btn.TextColor3 = Color3.fromRGB(220, 220, 220)
-    btn.TextXAlignment = Enum.TextXAlignment.Left
-    btn.Font = Enum.Font.GothamSemibold
-    btn.TextSize = 16
-    btn.Parent = sidebar
-    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 10)
-
-    btn.MouseButton1Click:Connect(function()
-        if currentTab then currentTab.Visible = false end
-        tabs[name].Visible = true
-        currentTab = tabs[name]
-
-        for _, b in pairs(sidebar:GetChildren()) do
-            if b:IsA("TextButton") then
-                b.BackgroundColor3 = (b == btn) and Color3.fromRGB(255, 60, 60) or Color3.fromRGB(25, 25, 25)
-            end
-        end
-    end)
-    return btn
-end
-
--- Tab Frames
-local executorTab = Instance.new("Frame")
-executorTab.Size = UDim2.new(1, -190, 1, 0)
-executorTab.Position = UDim2.new(0, 190, 0, 0)
-executorTab.BackgroundTransparency = 1
-executorTab.Visible = true
-executorTab.Parent = content
-tabs.Executor = executorTab
-
-local hubTab = Instance.new("Frame")
-hubTab.Size = UDim2.new(1, -190, 1, 0)
-hubTab.Position = UDim2.new(0, 190, 0, 0)
-hubTab.BackgroundTransparency = 1
-hubTab.Visible = false
-hubTab.Parent = content
-tabs.Hub = hubTab
-
-local consoleTab = Instance.new("Frame")
-consoleTab.Size = UDim2.new(1, -190, 1, 0)
-consoleTab.Position = UDim2.new(0, 190, 0, 0)
-consoleTab.BackgroundTransparency = 1
-consoleTab.Visible = false
-consoleTab.Parent = content
-tabs.Console = consoleTab
-
-local settingsTab = Instance.new("Frame")
-settingsTab.Size = UDim2.new(1, -190, 1, 0)
-settingsTab.Position = UDim2.new(0, 190, 0, 0)
-settingsTab.BackgroundTransparency = 1
-settingsTab.Visible = false
-settingsTab.Parent = content
-tabs.Settings = settingsTab
-
--- Create Sidebar Buttons
-createSidebarButton("Executor", "📝")
-createSidebarButton("Script Hub", "📚")
-createSidebarButton("Console", "📟")
-createSidebarButton("Settings", "⚙️")
-
--- EXECUTOR TAB - Code Editor
-local editorFrame = Instance.new("ScrollingFrame")
-editorFrame.Size = UDim
+content.Position =
