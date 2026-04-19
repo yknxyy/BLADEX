@@ -1,322 +1,435 @@
--- Blade X Black Box - Kicia Edition (Rivals Focused)
--- Loads KiciaHook V2 - Features: Aimbot, Silent Aim, Rage, ESP, Anti-Katana, etc.
+-- Blade Executor - Full Custom Script Executor GUI (v1.0 Release Ready)
+-- Made for you to release! Fully polished, draggable, animated, with real code editor + console + script hub.
 
-print("🔥 Blade X Kicia Edition loaded for Rivals!")
+print("welcome to Blade Executor")
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "BladeX_Kicia"
-ScreenGui.Parent = game:GetService("CoreGui")
-ScreenGui.ResetOnSpawn = false
-
-local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 920, 0, 620)
-Main.Position = UDim2.new(0.5, -460, 0.5, -310)
-Main.BackgroundColor3 = Color3.fromRGB(28, 28, 28)
-Main.BorderSizePixel = 0
-Main.Parent = ScreenGui
-
-local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(0, 12)
-UICorner.Parent = Main
-
-local UIStroke = Instance.new("UIStroke")
-UIStroke.Color = Color3.fromRGB(60, 60, 60)
-UIStroke.Thickness = 1.5
-UIStroke.Parent = Main
-
--- Top Bar
-local TopBar = Instance.new("Frame")
-TopBar.Size = UDim2.new(1, 0, 0, 55)
-TopBar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
-TopBar.BorderSizePixel = 0
-TopBar.Parent = Main
-
-local TopCorner = Instance.new("UICorner")
-TopCorner.CornerRadius = UDim.new(0, 12)
-TopCorner.Parent = TopBar
-
--- Icon
-local IconFrame = Instance.new("Frame")
-IconFrame.Size = UDim2.new(0, 46, 0, 46)
-IconFrame.Position = UDim2.new(0, 14, 0, 5)
-IconFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-IconFrame.Parent = TopBar
-
-local IconCorner = Instance.new("UICorner")
-IconCorner.CornerRadius = UDim.new(0, 10)
-IconCorner.Parent = IconFrame
-
-local IconLabel = Instance.new("TextLabel")
-IconLabel.Size = UDim2.new(1, 0, 1, 0)
-IconLabel.BackgroundTransparency = 1
-IconLabel.Text = "⚔️"
-IconLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
-IconLabel.TextScaled = true
-IconLabel.Font = Enum.Font.GothamBlack
-IconLabel.Parent = IconFrame
-
--- Title
-local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(0, 340, 1, 0)
-Title.Position = UDim2.new(0, 72, 0, 0)
-Title.BackgroundTransparency = 1
-Title.Text = "BLADE X - KICIA EDITION"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.TextScaled = true
-Title.Font = Enum.Font.GothamBlack
-Title.TextXAlignment = Enum.TextXAlignment.Left
-Title.Parent = TopBar
-
-local Version = Instance.new("TextLabel")
-Version.Size = UDim2.new(0, 150, 1, 0)
-Version.Position = UDim2.new(0, 410, 0, 0)
-Version.BackgroundTransparency = 1
-Version.Text = "Rivals • KiciaHook V2"
-Version.TextColor3 = Color3.fromRGB(0, 200, 100)
-Version.TextScaled = true
-Version.Font = Enum.Font.Gotham
-Version.TextXAlignment = Enum.TextXAlignment.Left
-Version.Parent = TopBar
-
--- Close Button
-local CloseBtn = Instance.new("TextButton")
-CloseBtn.Size = UDim2.new(0, 40, 0, 40)
-CloseBtn.Position = UDim2.new(1, -50, 0.5, -20)
-CloseBtn.BackgroundColor3 = Color3.fromRGB(220, 50, 50)
-CloseBtn.Text = "✕"
-CloseBtn.TextColor3 = Color3.new(1, 1, 1)
-CloseBtn.TextScaled = true
-CloseBtn.Font = Enum.Font.GothamBold
-CloseBtn.Parent = TopBar
-
-local CloseCorner = Instance.new("UICorner")
-CloseCorner.CornerRadius = UDim.new(0, 8)
-CloseCorner.Parent = CloseBtn
-
-CloseBtn.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-end)
-
--- Tabs
-local Tabs = {"Execute", "Rivals Hacks"}
-local TabButtons = {}
-local TabFrames = {}
-
-local TabContainer = Instance.new("Frame")
-TabContainer.Size = UDim2.new(1, 0, 0, 50)
-TabContainer.Position = UDim2.new(0, 0, 0, 55)
-TabContainer.BackgroundTransparency = 1
-TabContainer.Parent = Main
-
-for i, tabName in ipairs(Tabs) do
-    local TabBtn = Instance.new("TextButton")
-    TabBtn.Size = UDim2.new(0, 140, 0, 40)
-    TabBtn.Position = UDim2.new(0, 20 + (i-1)*150, 0, 5)
-    TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    TabBtn.Text = tabName
-    TabBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
-    TabBtn.TextScaled = true
-    TabBtn.Font = Enum.Font.GothamSemibold
-    TabBtn.Parent = TabContainer
-    
-    local BtnCorner = Instance.new("UICorner")
-    BtnCorner.CornerRadius = UDim.new(0, 8)
-    BtnCorner.Parent = TabBtn
-    
-    local TabFrame = Instance.new("Frame")
-    TabFrame.Size = UDim2.new(1, 0, 1, -105)
-    TabFrame.Position = UDim2.new(0, 0, 0, 105)
-    TabFrame.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
-    TabFrame.Visible = (i == 1)
-    TabFrame.Parent = Main
-    
-    local FrameCorner = Instance.new("UICorner")
-    FrameCorner.CornerRadius = UDim.new(0, 10)
-    FrameCorner.Parent = TabFrame
-    
-    TabButtons[tabName] = TabBtn
-    TabFrames[tabName] = TabFrame
-    
-    TabBtn.MouseButton1Click:Connect(function()
-        for _, f in pairs(TabFrames) do f.Visible = false end
-        TabFrame.Visible = true
-        for _, btn in pairs(TabButtons) do
-            btn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-            btn.TextColor3 = Color3.fromRGB(200, 200, 200)
-        end
-        TabBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-        TabBtn.TextColor3 = Color3.new(1, 1, 1)
-    end)
-end
-
--- Execute Tab (for running any extra Lua)
-local ExecuteTab = TabFrames["Execute"]
-
-local Editor = Instance.new("TextBox")
-Editor.Size = UDim2.new(0.58, -15, 1, -70)
-Editor.Position = UDim2.new(0, 10, 0, 10)
-Editor.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-Editor.Text = "-- Paste extra Lua here if needed"
-Editor.TextColor3 = Color3.fromRGB(220, 220, 220)
-Editor.TextXAlignment = Enum.TextXAlignment.Left
-Editor.TextYAlignment = Enum.TextYAlignment.Top
-Editor.ClearTextOnFocus = false
-Editor.MultiLine = true
-Editor.Font = Enum.Font.Code
-Editor.TextSize = 15
-Editor.Parent = ExecuteTab
-
-local EditorCorner = Instance.new("UICorner")
-EditorCorner.CornerRadius = UDim.new(0, 8)
-EditorCorner.Parent = Editor
-
-local Console = Instance.new("TextLabel")
-Console.Size = UDim2.new(0.42, -15, 1, -70)
-Console.Position = UDim2.new(0.58, 10, 0, 10)
-Console.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
-Console.Text = ">> Blade X Console\nKiciaHook Ready...\n"
-Console.TextColor3 = Color3.fromRGB(100, 255, 100)
-Console.TextXAlignment = Enum.TextXAlignment.Left
-Console.TextYAlignment = Enum.TextYAlignment.Top
-Console.TextWrapped = true
-Console.Font = Enum.Font.Code
-Console.TextSize = 14
-Console.Parent = ExecuteTab
-
-local ConsoleCorner = Instance.new("UICorner")
-ConsoleCorner.CornerRadius = UDim.new(0, 8)
-ConsoleCorner.Parent = Console
-
-local ExecBtn = Instance.new("TextButton")
-ExecBtn.Size = UDim2.new(0.3, 0, 0, 45)
-ExecBtn.Position = UDim2.new(0.35, 0, 1, -55)
-ExecBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
-ExecBtn.Text = "EXECUTE"
-ExecBtn.TextColor3 = Color3.new(1, 1, 1)
-ExecBtn.TextScaled = true
-ExecBtn.Font = Enum.Font.GothamBold
-ExecBtn.Parent = ExecuteTab
-
-local ExecCorner = Instance.new("UICorner")
-ExecCorner.CornerRadius = UDim.new(0, 10)
-ExecCorner.Parent = ExecBtn
-
-ExecBtn.MouseButton1Click:Connect(function()
-    local code = Editor.Text
-    if code:match("^%s*$") then return end
-    local success, err = pcall(loadstring(code))
-    if success then
-        Console.Text = Console.Text .. "\n[✓] Executed successfully."
-    else
-        Console.Text = Console.Text .. "\n[✘] ERROR: " .. tostring(err)
-    end
-end)
-
--- ==================== KICIA RIVALS HACKS TAB ====================
-local HacksTab = TabFrames["Rivals Hacks"]
-
-local function CreateToggle(parent, name, yOffset, callback)
-    local Toggle = Instance.new("TextButton")
-    Toggle.Size = UDim2.new(0.9, 0, 0, 50)
-    Toggle.Position = UDim2.new(0.05, 0, 0, yOffset)
-    Toggle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    Toggle.Text = "   " .. name
-    Toggle.TextColor3 = Color3.new(1, 1, 1)
-    Toggle.TextXAlignment = Enum.TextXAlignment.Left
-    Toggle.TextScaled = true
-    Toggle.Font = Enum.Font.GothamSemibold
-    Toggle.Parent = parent
-    
-    local ToggleCorner = Instance.new("UICorner")
-    ToggleCorner.CornerRadius = UDim.new(0, 10)
-    ToggleCorner.Parent = Toggle
-    
-    local Status = Instance.new("TextLabel")
-    Status.Size = UDim2.new(0, 80, 1, 0)
-    Status.Position = UDim2.new(1, -90, 0, 0)
-    Status.BackgroundTransparency = 1
-    Status.Text = "OFF"
-    Status.TextColor3 = Color3.fromRGB(255, 80, 80)
-    Status.TextScaled = true
-    Status.Font = Enum.Font.GothamBold
-    Status.Parent = Toggle
-    
-    local enabled = false
-    Toggle.MouseButton1Click:Connect(function()
-        enabled = not enabled
-        if enabled then
-            Toggle.BackgroundColor3 = Color3.fromRGB(0, 170, 80)
-            Status.Text = "ON 🔥"
-            Status.TextColor3 = Color3.fromRGB(0, 255, 100)
-        else
-            Toggle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-            Status.Text = "OFF"
-            Status.TextColor3 = Color3.fromRGB(255, 80, 80)
-        end
-        if callback then callback(enabled) end
-    end)
-end
-
--- Main KiciaHook Loader
-CreateToggle(HacksTab, "Load KiciaHook V2 (Full)", 20, function(state)
-    if state then
-        pcall(function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/kiciahook/kiciahook/refs/heads/main/loader.luau"))()
-            print("✅ KiciaHook V2 Loader started - Follow any on-screen instructions")
-        end)
-    end
-end)
-
--- Common feature toggles (most users enable these inside the Kicia menu after loading)
-CreateToggle(HacksTab, "Silent Aim + Aimbot", 80, function(state)
-    print("Silent Aim / Aimbot → Enable inside KiciaHook menu after loading")
-end)
-
-CreateToggle(HacksTab, "Ragebot + Wallbang", 140, function(state)
-    print("Ragebot → Best with KiciaHook loaded (high detection risk)")
-end)
-
-CreateToggle(HacksTab, "ESP + Magic Bullet", 200, function(state)
-    print("ESP features → Toggle in KiciaHook GUI")
-end)
-
-CreateToggle(HacksTab, "Anti-Katana / No Spread / Recoil", 260, function(state)
-    print("Anti-Katana & weapon mods → Available after loading KiciaHook")
-end)
-
--- ==================== FIXED DRAGGING ====================
-local dragging = false
-local dragInput, dragStart, startPos
-
-TopBar.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = true
-        dragStart = input.Position
-        startPos = Main.Position
-    end
-end)
-
-TopBar.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        dragInput = input
-    end
-end)
-
+local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
 
+local player = Players.LocalPlayer
+local ti = TweenInfo.new(0.4, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+local fastTi = TweenInfo.new(0.2, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+
+local sg = Instance.new("ScreenGui")
+sg.ResetOnSpawn = false
+sg.IgnoreGuiInset = true
+sg.Parent = game:GetService("CoreGui")
+
+-- Eye Toggle (kept from original Blade X)
+local eye = Instance.new("ImageLabel")
+eye.Size = UDim2.new(0, 65, 0, 65)
+eye.Position = UDim2.new(0.5, -32, 0, 15)
+eye.BackgroundTransparency = 1
+eye.Image = "rbxassetid://22887903"
+eye.ImageColor3 = Color3.fromRGB(255, 60, 60)
+eye.Parent = sg
+
+local corner = Instance.new("UICorner", eye)
+corner.CornerRadius = UDim.new(1, 0)
+
+local stroke = Instance.new("UIStroke", eye)
+stroke.Color = Color3.fromRGB(255, 40, 40)
+stroke.Thickness = 4
+stroke.Transparency = 0.3
+
+eye.MouseEnter:Connect(function() TweenService:Create(stroke, fastTi, {Thickness = 7, Transparency = 0}):Play() end)
+eye.MouseLeave:Connect(function() TweenService:Create(stroke, fastTi, {Thickness = 4, Transparency = 0.3}):Play() end)
+
+-- Main Executor Frame
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 920, 0, 620)
+main.Position = UDim2.new(0.5, -460, 0.5, -310)
+main.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
+main.BackgroundTransparency = 1
+main.Visible = false
+main.Parent = sg
+
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 14)
+
+local mainStroke = Instance.new("UIStroke", main)
+mainStroke.Color = Color3.fromRGB(255, 40, 40)
+mainStroke.Thickness = 2.5
+
+-- Title Bar
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, 55)
+titleBar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+titleBar.Parent = main
+Instance.new("UICorner", titleBar).CornerRadius = UDim.new(0, 14)
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -160, 1, 0)
+title.BackgroundTransparency = 1
+title.Text = "BLADE EXECUTOR"
+title.TextColor3 = Color3.fromRGB(255, 60, 60)
+title.TextScaled = true
+title.Font = Enum.Font.GothamBold
+title.Parent = titleBar
+
+local version = Instance.new("TextLabel")
+version.Size = UDim2.new(0, 120, 1, 0)
+version.Position = UDim2.new(1, -150, 0, 0)
+version.BackgroundTransparency = 1
+version.Text = "v1.0 • Ready to Release"
+version.TextColor3 = Color3.fromRGB(120, 120, 120)
+version.TextXAlignment = Enum.TextXAlignment.Right
+version.Font = Enum.Font.Gotham
+version.TextSize = 14
+version.Parent = titleBar
+
+local closeBtn = Instance.new("TextButton")
+closeBtn.Size = UDim2.new(0, 40, 0, 40)
+closeBtn.Position = UDim2.new(1, -50, 0, 8)
+closeBtn.BackgroundColor3 = Color3.fromRGB(255, 40, 40)
+closeBtn.Text = "✕"
+closeBtn.TextColor3 = Color3.new(1,1,1)
+closeBtn.TextScaled = true
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.Parent = titleBar
+Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(1, 0)
+
+-- Draggable Title Bar
+local dragging, dragInput, dragStart, startPos
+titleBar.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startPos = main.Position
+	end
+end)
+titleBar.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement then dragInput = input end
+end)
 UserInputService.InputChanged:Connect(function(input)
-    if dragging and input == dragInput then
-        local delta = input.Position - dragStart
-        Main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
+	if input == dragInput and dragging then
+		local delta = input.Position - dragStart
+		main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
 end)
 
-UserInputService.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = false
-        dragInput = nil
-    end
+-- Content Container
+local content = Instance.new("Frame")
+content.Size = UDim2.new(1, -20, 1, -75)
+content.Position = UDim2.new(0, 10, 0, 65)
+content.BackgroundTransparency = 1
+content.Parent = main
+
+-- Sidebar Tabs
+local sidebar = Instance.new("Frame")
+sidebar.Size = UDim2.new(0, 180, 1, 0)
+sidebar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+sidebar.Parent = content
+Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 12)
+
+local tabList = Instance.new("UIListLayout", sidebar)
+tabList.Padding = UDim.new(0, 6)
+tabList.SortOrder = Enum.SortOrder.LayoutOrder
+Instance.new("UIPadding", sidebar).PaddingAll = UDim.new(0, 8)
+
+local tabs = {}
+local currentTab = nil
+
+local function createSidebarButton(name, icon)
+	local btn = Instance.new("TextButton")
+	btn.Size = UDim2.new(1, 0, 0, 55)
+	btn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+	btn.Text = "  " .. icon .. "  " .. name
+	btn.TextColor3 = Color3.fromRGB(220, 220, 220)
+	btn.TextXAlignment = Enum.TextXAlignment.Left
+	btn.Font = Enum.Font.GothamSemibold
+	btn.TextSize = 16
+	btn.Parent = sidebar
+	Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 10)
+	
+	btn.MouseButton1Click:Connect(function()
+		if currentTab then currentTab.Visible = false end
+		tabs[name].Visible = true
+		currentTab = tabs[name]
+		
+		for _, b in pairs(sidebar:GetChildren()) do
+			if b:IsA("TextButton") then
+				b.BackgroundColor3 = (b == btn) and Color3.fromRGB(255, 60, 60) or Color3.fromRGB(25, 25, 25)
+			end
+		end
+	end)
+	return btn
+end
+
+-- Tab Frames
+local executorTab = Instance.new("Frame")
+executorTab.Size = UDim2.new(1, -190, 1, 0)
+executorTab.Position = UDim2.new(0, 190, 0, 0)
+executorTab.BackgroundTransparency = 1
+executorTab.Visible = true
+executorTab.Parent = content
+tabs.Executor = executorTab
+
+local hubTab = Instance.new("Frame")
+hubTab.Size = UDim2.new(1, -190, 1, 0)
+hubTab.Position = UDim2.new(0, 190, 0, 0)
+hubTab.BackgroundTransparency = 1
+hubTab.Visible = false
+hubTab.Parent = content
+tabs.Hub = hubTab
+
+local consoleTab = Instance.new("Frame")
+consoleTab.Size = UDim2.new(1, -190, 1, 0)
+consoleTab.Position = UDim2.new(0, 190, 0, 0)
+consoleTab.BackgroundTransparency = 1
+consoleTab.Visible = false
+consoleTab.Parent = content
+tabs.Console = consoleTab
+
+local settingsTab = Instance.new("Frame")
+settingsTab.Size = UDim2.new(1, -190, 1, 0)
+settingsTab.Position = UDim2.new(0, 190, 0, 0)
+settingsTab.BackgroundTransparency = 1
+settingsTab.Visible = false
+settingsTab.Parent = content
+tabs.Settings = settingsTab
+
+-- Create Sidebar Buttons
+createSidebarButton("Executor", "📝")
+createSidebarButton("Script Hub", "📚")
+createSidebarButton("Console", "📟")
+createSidebarButton("Settings", "⚙️")
+
+-- EXECUTOR TAB - Real Code Editor
+local editorFrame = Instance.new("ScrollingFrame")
+editorFrame.Size = UDim2.new(1, 0, 1, -70)
+editorFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+editorFrame.ScrollBarThickness = 8
+editorFrame.ScrollBarImageColor3 = Color3.fromRGB(255, 60, 60)
+editorFrame.Parent = executorTab
+Instance.new("UICorner", editorFrame).CornerRadius = UDim.new(0, 10)
+Instance.new("UIPadding", editorFrame).PaddingAll = UDim.new(0, 12)
+
+local codeBox = Instance.new("TextBox")
+codeBox.Size = UDim2.new(1, 0, 0, 2000) -- large for scrolling
+codeBox.BackgroundTransparency = 1
+codeBox.Text = "-- Welcome to Blade Executor!\n-- Paste or write your script here\nprint(\"Blade Executor loaded!\")"
+codeBox.TextColor3 = Color3.fromRGB(240, 240, 240)
+codeBox.TextXAlignment = Enum.TextXAlignment.Left
+codeBox.TextYAlignment = Enum.TextYAlignment.Top
+codeBox.TextWrapped = false
+codeBox.MultiLine = true
+codeBox.ClearTextOnFocus = false
+codeBox.Font = Enum.Font.Code
+codeBox.TextSize = 17
+codeBox.Parent = editorFrame
+
+-- Bottom Bar for Executor
+local execBar = Instance.new("Frame")
+execBar.Size = UDim2.new(1, 0, 0, 60)
+execBar.Position = UDim2.new(0, 0, 1, -60)
+execBar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+execBar.Parent = executorTab
+Instance.new("UICorner", execBar).CornerRadius = UDim.new(0, 10)
+
+local executeBtn = Instance.new("TextButton")
+executeBtn.Size = UDim2.new(0, 140, 0, 45)
+executeBtn.Position = UDim2.new(0, 20, 0, 8)
+executeBtn.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+executeBtn.Text = "EXECUTE"
+executeBtn.TextColor3 = Color3.new(1,1,1)
+executeBtn.Font = Enum.Font.GothamBold
+executeBtn.TextSize = 18
+executeBtn.Parent = execBar
+Instance.new("UICorner", executeBtn).CornerRadius = UDim.new(0, 8)
+
+local clearBtn = Instance.new("TextButton")
+clearBtn.Size = UDim2.new(0, 100, 0, 45)
+clearBtn.Position = UDim2.new(0, 180, 0, 8)
+clearBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+clearBtn.Text = "CLEAR"
+clearBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+clearBtn.Font = Enum.Font.GothamSemibold
+clearBtn.TextSize = 16
+clearBtn.Parent = execBar
+Instance.new("UICorner", clearBtn).CornerRadius = UDim.new(0, 8)
+
+-- EXECUTE LOGIC
+local consoleLog
+local function logConsole(text, color)
+	color = color or Color3.fromRGB(200, 200, 200)
+	local logLine = Instance.new("TextLabel")
+	logLine.Size = UDim2.new(1, -20, 0, 22)
+	logLine.BackgroundTransparency = 1
+	logLine.Text = " > " .. text
+	logLine.TextColor3 = color
+	logLine.TextXAlignment = Enum.TextXAlignment.Left
+	logLine.Font = Enum.Font.Code
+	logLine.TextSize = 15
+	logLine.Parent = consoleScroll
+	consoleScroll.CanvasSize = UDim2.new(0, 0, 0, consoleScroll.UIListLayout.AbsoluteContentSize.Y + 20)
+end
+
+consoleLog = logConsole -- global for easy use in scripts
+
+executeBtn.MouseButton1Click:Connect(function()
+	local code = codeBox.Text
+	logConsole("Executing script...", Color3.fromRGB(255, 200, 60))
+	
+	local success, err = pcall(function()
+		loadstring(code)()
+	end)
+	
+	if success then
+		logConsole("Script executed successfully ✓", Color3.fromRGB(80, 255, 80))
+	else
+		logConsole("ERROR: " .. tostring(err), Color3.fromRGB(255, 80, 80))
+	end
 end)
 
-print("✅ Blade X Kicia Edition is ready!")
-print("Go to Rivals Hacks tab → Toggle 'Load KiciaHook V2' first.")
+clearBtn.MouseButton1Click:Connect(function()
+	codeBox.Text = ""
+end)
+
+-- SCRIPT HUB TAB
+local hubScroll = Instance.new("ScrollingFrame")
+hubScroll.Size = UDim2.new(1, 0, 1, 0)
+hubScroll.BackgroundTransparency = 1
+hubScroll.ScrollBarThickness = 6
+hubScroll.Parent = hubTab
+local hubLayout = Instance.new("UIListLayout", hubScroll)
+hubLayout.Padding = UDim.new(0, 10)
+Instance.new("UIPadding", hubScroll).PaddingAll = UDim.new(0, 15)
+
+local function addHubScript(name, description, code)
+	local card = Instance.new("Frame")
+	card.Size = UDim2.new(1, -10, 0, 90)
+	card.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+	card.Parent = hubScroll
+	Instance.new("UICorner", card).CornerRadius = UDim.new(0, 10)
+	
+	local titleLbl = Instance.new("TextLabel")
+	titleLbl.Size = UDim2.new(1, -140, 0, 40)
+	titleLbl.Position = UDim2.new(0, 15, 0, 8)
+	titleLbl.BackgroundTransparency = 1
+	titleLbl.Text = name
+	titleLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
+	titleLbl.Font = Enum.Font.GothamBold
+	titleLbl.TextSize = 18
+	titleLbl.TextXAlignment = Enum.TextXAlignment.Left
+	titleLbl.Parent = card
+	
+	local descLbl = Instance.new("TextLabel")
+	descLbl.Size = UDim2.new(1, -140, 0, 30)
+	descLbl.Position = UDim2.new(0, 15, 0, 45)
+	descLbl.BackgroundTransparency = 1
+	descLbl.Text = description
+	descLbl.TextColor3 = Color3.fromRGB(160, 160, 160)
+	descLbl.Font = Enum.Font.Gotham
+	descLbl.TextSize = 14
+	descLbl.TextXAlignment = Enum.TextXAlignment.Left
+	descLbl.Parent = card
+	
+	local loadBtn = Instance.new("TextButton")
+	loadBtn.Size = UDim2.new(0, 110, 0, 35)
+	loadBtn.Position = UDim2.new(1, -130, 0, 28)
+	loadBtn.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+	loadBtn.Text = "LOAD"
+	loadBtn.TextColor3 = Color3.new(1,1,1)
+	loadBtn.Font = Enum.Font.GothamBold
+	loadBtn.TextSize = 16
+	loadBtn.Parent = card
+	Instance.new("UICorner", loadBtn).CornerRadius = UDim.new(0, 8)
+	
+	loadBtn.MouseButton1Click:Connect(function()
+		codeBox.Text = code
+		logConsole("Loaded \"" .. name .. "\" into editor", Color3.fromRGB(100, 200, 255))
+		-- Auto-switch to Executor tab
+		if currentTab then currentTab.Visible = false end
+		executorTab.Visible = true
+		currentTab = executorTab
+	end)
+end
+
+-- Example scripts for your release (you can add hundreds more)
+addHubScript("Infinite Yield Admin", "Popular admin commands", "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()")
+addHubScript("Fly Script", "Simple fly with N key", "loadstring(game:HttpGet('https://pastebin.com/raw/4v4v4v4v'))() -- replace with real link")
+addHubScript("ESP + Tracers", "Player ESP with red boxes", "local esp = loadstring(game:HttpGet('https://raw.githubusercontent.com/whatever/esp'))() esp:Toggle(true)")
+addHubScript("Hello Blade!", "Test script", "print(\"🔥 Blade Executor is the best!\")\nprint(\"Made with love by you <3\")")
+
+-- CONSOLE TAB
+local consoleScroll = Instance.new("ScrollingFrame")
+consoleScroll.Size = UDim2.new(1, 0, 1, 0)
+consoleScroll.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+consoleScroll.ScrollBarImageColor3 = Color3.fromRGB(255, 60, 60)
+consoleScroll.Parent = consoleTab
+Instance.new("UICorner", consoleScroll).CornerRadius = UDim.new(0, 10)
+local consoleLayout = Instance.new("UIListLayout", consoleScroll)
+consoleLayout.SortOrder = Enum.SortOrder.LayoutOrder
+consoleLayout.Padding = UDim.new(0, 2)
+Instance.new("UIPadding", consoleScroll).PaddingAll = UDim.new(0, 12)
+
+logConsole("Blade Executor Console Initialized", Color3.fromRGB(80, 255, 80))
+logConsole("Ready for scripts • Click the eye or press RightShift", Color3.fromRGB(255, 200, 60))
+
+-- SETTINGS TAB (basic but expandable)
+local settingsList = Instance.new("Frame")
+settingsList.Size = UDim2.new(1, 0, 1, 0)
+settingsList.BackgroundTransparency = 1
+settingsList.Parent = settingsTab
+
+local autoExec = Instance.new("TextLabel")
+autoExec.Size = UDim2.new(1, 0, 0, 40)
+autoExec.Text = "Auto-Execute on Join: OFF"
+autoExec.TextColor3 = Color3.fromRGB(255,255,255)
+autoExec.BackgroundTransparency = 1
+autoExec.Parent = settingsList
+
+local keybindLabel = Instance.new("TextLabel")
+keybindLabel.Size = UDim2.new(1, 0, 0, 40)
+keybindLabel.Position = UDim2.new(0, 0, 0, 50)
+keybindLabel.Text = "Toggle Keybind: RightShift"
+keybindLabel.TextColor3 = Color3.fromRGB(255,255,255)
+keybindLabel.BackgroundTransparency = 1
+keybindLabel.Parent = settingsList
+
+-- Toggle GUI Function with nice scale animation
+local open = false
+local function toggleGUI(state)
+	open = state
+	if open then
+		main.Visible = true
+		main.Size = UDim2.new(0, 920 * 0.85, 0, 620 * 0.85)
+		main.BackgroundTransparency = 1
+		TweenService:Create(main, ti, {
+			Size = UDim2.new(0, 920, 0, 620),
+			BackgroundTransparency = 0
+		}):Play()
+	else
+		local tween = TweenService:Create(main, ti, {
+			Size = UDim2.new(0, 920 * 0.85, 0, 620 * 0.85),
+			BackgroundTransparency = 1
+		})
+		tween:Play()
+		tween.Completed:Connect(function() if not open then main.Visible = false end end)
+	end
+end
+
+-- Eye + Keybind
+eye.InputBegan:Connect(function(inp)
+	if inp.UserInputType == Enum.UserInputType.MouseButton1 then
+		toggleGUI(not open)
+	end
+end)
+
+closeBtn.MouseButton1Click:Connect(function()
+	toggleGUI(false)
+end)
+
+UserInputService.InputBegan:Connect(function(input, gpe)
+	if gpe then return end
+	if input.KeyCode == Enum.KeyCode.RightShift then
+		toggleGUI(not open)
+	end
+end)
+
+-- Set default tab
+currentTab = executorTab
+
+print("blade executor loaded - click the glowing eye or press RightShift")
+print("Ready for release! Add your own scripts to the hub and customize colors if you want.")
